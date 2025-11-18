@@ -1,0 +1,79 @@
+/* Page layout */
+.users-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Center loading/error text */
+.center-text {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.error-text {
+    text-align: center;
+    color: #d9534f;
+    font-size: 18px;
+}
+
+/* Table Card Wrapper */
+.table-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+}
+
+/* Table Styling */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+/* Header Row */
+.user-table thead th {
+    text-align: left;
+    padding: 12px;
+    font-weight: 600;
+    background: #fafafa;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+/* Table Body Rows */
+.user-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s ease;
+}
+
+.user-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+/* Table Cells */
+.user-table td {
+    padding: 12px;
+    color: #444;
+}
+
+/* Role column */
+.role {
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #555;
+}
+
+/* Zebra striping */
+.user-table tbody tr:nth-child(even) {
+    background: #fcfcfc;
+}

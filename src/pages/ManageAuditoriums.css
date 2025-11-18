@@ -1,0 +1,119 @@
+/* Main page container */
+.aud-page {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Titles */
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+/* Form card */
+.aud-form-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.aud-form-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.aud-form-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.aud-form-card label {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.aud-form-card input {
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Grid layout */
+.aud-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+/* Individual auditorium card */
+.aud-card {
+  padding: 20px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  transition: 0.25s ease;
+}
+
+.aud-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.text-light {
+  color: #555;
+  margin: 4px 0;
+}
+
+/* Buttons */
+.primary-btn {
+  margin-top: 18px;
+  padding: 10px 15px;
+  background: purple;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary-btn:hover {
+  background: #0b5ed7;
+}
+
+/* Messages */
+.msg {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.msg.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.msg.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.error-text {
+  text-align: center;
+  color: #e63946;
+}

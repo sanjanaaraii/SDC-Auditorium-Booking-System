@@ -1,0 +1,125 @@
+.page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.loading, .error {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.error { color: #d9534f; }
+
+.booking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Card */
+.booking-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+.booking-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+}
+
+/* Header */
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.booking-header h3 {
+    font-size: 20px;
+    margin: 0;
+}
+
+/* Status tags */
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status.approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status.rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status.cancelled {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+/* Info */
+.info {
+    margin: 8px 0;
+}
+
+.info.small {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Buttons */
+.action-row {
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.btn.approve {
+    background: #d4edda;
+    color: #155724;
+}
+
+.btn.approve:hover {
+    background: #c3e6cb;
+}
+
+.btn.reject {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.btn.reject:hover {
+    background: #f5c6cb;
+}
