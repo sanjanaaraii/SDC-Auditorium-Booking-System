@@ -1,12 +1,13 @@
 import express from "express";
 import Auditorium from "../../models/auditorium.js";
+import { authorize } from "../../middleware/authorize.js";
 import { authenticate } from "../../middleware/authmiddleware.js";
-import { isAdmin } from "../../middleware/adminMiddleware.js";
+
 
 const router = express.Router();
 
 // Create new auditorium
-router.post("/", authenticate, isAdmin, async (req, res) => {
+router.post("/", authenticate, authorize("admin"), async (req, res) => {
   try {
     const { name, location, capacity, facilities } = req.body;
 
@@ -30,7 +31,7 @@ router.post("/", authenticate, isAdmin, async (req, res) => {
 });
 
 // Update auditorium
-router.put("/:id", authenticate, isAdmin, async (req, res) => {
+router.put("/:id", authenticate, authorize("admin"), async (req, res) => {
   try {
     const { name, location, capacity, facilities } = req.body;
 
@@ -53,7 +54,7 @@ router.put("/:id", authenticate, isAdmin, async (req, res) => {
 });
 
 // Delete auditorium
-router.delete("/:id", authenticate, isAdmin, async (req, res) => {
+router.delete("/:id", authenticate, authorize("admin"), async (req, res) => {
   try {
     const auditorium = await Auditorium.findByIdAndDelete(req.params.id);
     
@@ -69,7 +70,7 @@ router.delete("/:id", authenticate, isAdmin, async (req, res) => {
 });
 
 // Get all auditoriums (admin view with stats)
-router.get("/", authenticate, isAdmin, async (req, res) => {
+router.get("/", authenticate, authorize("admin"), async (req, res) => {
   try {
     const auditoriums = await Auditorium.find().sort({ createdAt: -1 });
     res.json(auditoriums);

@@ -1,7 +1,7 @@
 import express from "express";
 import Auditorium from "../models/auditorium.js";
 import { authenticate } from "../middleware/authmiddleware.js";
-import adminMiddleware from "../middleware/adminMiddleware.js"; // <-- Import admin middleware
+import { authorize } from "../middleware/authorize.js";
 
 const router = express.Router();
 
@@ -30,7 +30,11 @@ router.get("/", authenticate, async (req, res) => {
 // === ADD THIS NEW POST ROUTE ===
 // POST /
 // Creates a new auditorium (Admin Only)
-router.post("/", authenticate, adminMiddleware, async (req, res) => {
+router.post(
+  "/",
+  authenticate,
+  authorize("admin"),
+  async (req, res) => {
   try {
     const { name, location, capacity, facilities } = req.body;
 

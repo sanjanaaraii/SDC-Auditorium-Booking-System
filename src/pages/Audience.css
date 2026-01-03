@@ -1,0 +1,87 @@
+.audience-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.audience-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* BOOKINGS */
+
+.booking-list {
+  display: grid;
+  gap: 16px;
+}
+
+.booking-card {
+  padding: 16px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.booking-card h3 {
+  margin-bottom: 8px;
+}
+
+.status {
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.status.confirmed {
+  color: green;
+}
+
+.status.cancelled {
+  color: red;
+}
+
+.status.pending {
+  color: orange;
+}
+
+.empty-text {
+  text-align: center;
+  color: gray;
+}
+
+.audience-loading {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* REQUEST FORM */
+
+.request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.request-form input,
+.request-form textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.request-form button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.request-form button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}

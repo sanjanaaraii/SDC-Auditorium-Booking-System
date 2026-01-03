@@ -2,6 +2,8 @@ import express from "express";
 import Booking from "../models/booking.js";
 import Auditorium from "../models/auditorium.js";
 import { authenticate } from "../middleware/authmiddleware.js";
+import { authorize } from "../middleware/authorize.js";
+
 
 const router = express.Router();
 
@@ -18,7 +20,11 @@ router.get("/", authenticate, async (req, res) => {
 });
 
 
-router.post("/", authenticate, async (req, res) => {
+router.post(
+  "/",
+  authenticate,
+  authorize("organizer"),
+  async (req, res) => {
   try {
     const { auditoriumId, eventName, description, date, startTime, endTime } = req.body;
 
@@ -60,7 +66,11 @@ router.post("/", authenticate, async (req, res) => {
 });
 
 
-router.delete("/:id", authenticate, async (req, res) => {
+router.delete(
+  "/:id",
+  authenticate,
+  authorize("organizer"),
+  async (req, res) => {
     try {
         const booking = await Booking.findOne({ _id: req.params.id, user: req.user._id });
 

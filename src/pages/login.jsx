@@ -1,23 +1,27 @@
-// In your Login.jsx
-const handleLogin = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post('http://localhost:5000/api/auth/login', {
-      email,
-      password
-    });
-    
-    // Store both token and user
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('user', JSON.stringify(response.data.user));
-    
-    // Redirect based on role
-    if (response.data.user.role === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/dashboard'); // or wherever users go
-    }
-  } catch (error) {
-    alert(error.response?.data?.message || 'Login failed');
-  }
+// src/pages/login.jsx
+import { useNavigate } from "react-router-dom";
+
+const Login = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      { email, password }
+    );
+
+    const { token, user } = response.data;
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    // ✅ REAL REDIRECT
+    if (user.role === "admin") navigate("/admin");
+    else if (user.role === "organizer") navigate("/book");
+    else navigate("/audience-bookings");
+  };
 };

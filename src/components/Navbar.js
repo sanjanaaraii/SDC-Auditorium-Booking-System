@@ -1,3 +1,4 @@
+// src/components/Navbar.js
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../App.js";
@@ -17,24 +18,29 @@ const Navbar = () => {
         <NavLink to="/" className="navbar-brand">
           AudiBooker
         </NavLink>
+
         <ul className="navbar-links">
           {auth.token ? (
             <>
-              {/* === Conditional Links based on Role === */}
-              {auth.user?.role === 'admin' ? (
-                // ADMIN LINKS
-                <li>
-                  <NavLink to="/admin">
-                    Admin Dashboard
-                  </NavLink>
-                </li>
-              ) : (
-                // REGULAR USER LINKS
+              {/* ADMIN */}
+              {auth.user?.role === "admin" && (
                 <>
                   <li>
-                    <NavLink to="/book">
-                      Book an Auditorium
+                    <NavLink to="/admin">Admin Dashboard</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/admin/organizer-requests">
+                      Organizer Requests
                     </NavLink>
+                  </li>
+                </>
+              )}
+
+              {/* ORGANIZER */}
+              {auth.user?.role === "organizer" && (
+                <>
+                  <li>
+                    <NavLink to="/book">Book an Auditorium</NavLink>
                   </li>
                   <li>
                     <NavLink to="/my-bookings">
@@ -44,12 +50,23 @@ const Navbar = () => {
                 </>
               )}
 
+              {/* AUDIENCE */}
+              {auth.user?.role === "audience" && (
+                <>
+                  <li>
+                    <NavLink to="/events">Events</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/my-bookings">My Bookings</NavLink>
+                  </li>
+                </>
+              )}
 
               <li>
                 <button
                   onClick={handleLogout}
                   className="btn btn-primary"
-                  style={{width: 'auto', padding: '0.5rem 1rem'}}
+                  style={{ width: "auto", padding: "0.5rem 1rem" }}
                 >
                   Logout
                 </button>
@@ -57,7 +74,11 @@ const Navbar = () => {
             </>
           ) : (
             <li>
-              <NavLink to="/auth" className="btn btn-primary" style={{width: 'auto', padding: '0.5rem 1rem'}}>
+              <NavLink
+                to="/auth"
+                className="btn btn-primary"
+                style={{ width: "auto", padding: "0.5rem 1rem" }}
+              >
                 Login / Signup
               </NavLink>
             </li>

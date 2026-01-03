@@ -2,12 +2,13 @@ import express from "express";
 import User from "../../models/user.js";
 import Booking from "../../models/booking.js";
 import { authenticate } from "../../middleware/authmiddleware.js";
-import { isAdmin } from "../../middleware/adminMiddleware.js";
+import { authorize } from "../../middleware/authorize.js";
+
 
 const router = express.Router();
 
 // Get all users
-router.get("/", authenticate, isAdmin, async (req, res) => {
+router.get("/", authenticate,authorize("admin"), async (req, res) => {
   try {
     const { role, search } = req.query;
     
@@ -43,7 +44,7 @@ router.get("/", authenticate, isAdmin, async (req, res) => {
 });
 
 // Get single user details
-router.get("/:id", authenticate, isAdmin, async (req, res) => {
+router.get("/:id", authenticate, authorize("admin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select('-password');
     
@@ -66,11 +67,11 @@ router.get("/:id", authenticate, isAdmin, async (req, res) => {
 });
 
 // Update user role
-router.patch("/:id/role", authenticate, isAdmin, async (req, res) => {
+router.patch("/:id/role", authenticate, authorize("admin"), async (req, res) => {
   try {
     const { role } = req.body;
 
-    if (!role || !['admin', 'user'].includes(role)) {
+if (!role || !['admin', 'organizer', 'audience'].includes(role)) {
       return res.status(400).json({ message: "Invalid role. Must be 'admin' or 'user'" });
     }
 
@@ -96,7 +97,7 @@ router.patch("/:id/role", authenticate, isAdmin, async (req, res) => {
 });
 
 // Delete user
-router.delete("/:id", authenticate, isAdmin, async (req, res) => {
+router.delete("/:id", authenticate, authorize("admin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     
@@ -123,17 +124,20 @@ router.delete("/:id", authenticate, isAdmin, async (req, res) => {
 });
 
 // Get user statistics
-router.get("/stats/overview", authenticate, isAdmin, async (req, res) => {
+router.get("/stats/overview", authenticate, authorize("admin"), async (req, res) => {
   try {
     const totalUsers = await User.countDocuments();
     const adminUsers = await User.countDocuments({ role: 'admin' });
-    const regularUsers = await User.countDocuments({ role: 'user' });
+   const organizers = await User.countDocuments({ role: 'organizer' });
+const audience = await User.countDocuments({ role: 'audience' });
 
-    res.json({
-      total: totalUsers,
-      admins: adminUsers,
-      users: regularUsers
-    });
+res.json({
+  total: totalUsers,
+  admins: adminUsers,
+  organizers,
+  audience
+});
+
   } catch (err) {
     console.error("Error fetching user stats:", err);
     res.status(500).json({ message: "Server error" });

@@ -1,14 +1,16 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import axios from "axios";
+
 import AuthPage from "./pages/authpage.js";
 import BookingPage from "./pages/BookingPage.js";
 import MyBookingsPage from "./pages/mybookings.js";
+import AudienceBookings from "./pages/AudienceBookings.js";
+
 import Navbar from "./components/Navbar.js";
 import HomePage from "./pages/homepage.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
-import axios from "axios";
 
-// ADD THESE 3 IMPORTS
 import ManageAuditoriums from "./pages/ManageAuditoriums.js";
 import ViewAllBookings from "./pages/ViewAllBookings.js";
 import ManageUsers from "./pages/ManageUsers.js";
@@ -31,8 +33,8 @@ const App = () => {
       }
     } catch (err) {
       console.error("Error parsing user:", err);
-      localStorage.removeItem("user");
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
     } finally {
       setAuthLoading(false);
     }
@@ -52,10 +54,27 @@ const App = () => {
 
   const AdminRoute = ({ children }) => {
     const { auth } = useContext(AuthContext);
-    if (auth?.token && auth.user?.role === "admin") {
-      return children;
+    return auth?.token && auth.user?.role === "admin"
+      ? children
+      : <Navigate to="/" />;
+  };
+
+  const OrganizerRoute = ({ children }) => {
+    const { auth } = useContext(AuthContext);
+
+    if (!auth?.token) return <Navigate to="/auth" />;
+
+    if (auth.user?.role !== "organizer") {
+      if (auth.user?.role === "audience") {
+        return <Navigate to="/events" />;
+      }
+      if (auth.user?.role === "admin") {
+        return <Navigate to="/admin" />;
+      }
+      return <Navigate to="/" />;
     }
-    return <Navigate to="/book" />;
+
+    return children;
   };
 
   if (authLoading) {
@@ -69,34 +88,45 @@ const App = () => {
         <main className="container">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            
-            {/* YOUR ORIGINAL AUTH ROUTE (NO CHANGES) */}
+
+            {/* AUTH */}
             <Route
               path="/auth"
               element={
                 auth.token ? (
                   auth.user?.role === "admin" ? (
                     <Navigate to="/admin" />
-                  ) : (
+                  ) : auth.user?.role === "organizer" ? (
                     <Navigate to="/book" />
+                  ) : (
+                    <Navigate to="/events" />
                   )
                 ) : (
                   <AuthPage />
                 )
               }
             />
-            
-            {/* YOUR ORIGINAL BOOK ROUTE (NO CHANGES) */}
+
+            {/* ORGANIZER */}
             <Route
               path="/book"
               element={
-                <PrivateRoute>
+                <OrganizerRoute>
                   <BookingPage />
+                </OrganizerRoute>
+              }
+            />
+
+            {/* AUDIENCE */}
+            <Route
+              path="/events"
+              element={
+                <PrivateRoute>
+                  <AudienceBookings />
                 </PrivateRoute>
               }
             />
 
-            {/* YOUR ORIGINAL MY-BOOKINGS ROUTE (NO CHANGES) */}
             <Route
               path="/my-bookings"
               element={
@@ -106,7 +136,7 @@ const App = () => {
               }
             />
 
-            {/* YOUR ORIGINAL ADMIN ROUTE (NO CHANGES) */}
+            {/* ADMIN */}
             <Route
               path="/admin"
               element={
@@ -116,7 +146,6 @@ const App = () => {
               }
             />
 
-            {/* ADD THESE NEW ROUTES FOR THE ADMIN DASHBOARD LINKS */}
             <Route
               path="/admin/auditoriums"
               element={
@@ -125,6 +154,7 @@ const App = () => {
                 </AdminRoute>
               }
             />
+
             <Route
               path="/admin/bookings"
               element={
@@ -133,6 +163,7 @@ const App = () => {
                 </AdminRoute>
               }
             />
+
             <Route
               path="/admin/users"
               element={
@@ -141,8 +172,7 @@ const App = () => {
                 </AdminRoute>
               }
             />
-            
-            {/* YOUR ORIGINAL WILDCARD ROUTE (NO CHANGES) */}
+
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>

@@ -1,101 +1,135 @@
-import React, { useState, useContext } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../App';
+import React, { useState, useContext } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../App";
 
-const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = "http://localhost:5000/api/auth";
 
 const AuthPage = () => {
-    const [isLogin, setIsLogin] = useState(true);
-    const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-    const [message, setMessage] = useState({ type: '', text: '' });
-    const [loading, setLoading] = useState(false);
-    
-    const { setAuth } = useContext(AuthContext);
-    const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const { setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-        setMessage({ type: '', text: '' });
-    };
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setMessage({ type: '', text: '' });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        const endpoint = isLogin ? '/login' : '/register';
-        
-        try {
-            const res = await axios.post(`${API_URL}${endpoint}`, formData);
-            const { token, user } = res.data;
+    const endpoint = isLogin ? "/login" : "/register";
 
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            
-            setAuth({ token, user });
+    const res = await axios.post(`${API_URL}${endpoint}`, formData);
+    const { token, user } = res.data;
 
-            if (user.role === 'admin') {
-                navigate('/admin'); 
-            } else {
-                navigate('/book'); 
-            }
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-        } catch (err) {
-            const errorMsg = err.response?.data?.message || 'An error occurred.';
-            
-            if (errorMsg.includes('expired')) {
-                setMessage({ type: 'error', text: 'Session expired. Please log in again.' });
-                
-                localStorage.removeItem("token");
-                localStorage.removeItem("user");
-                setAuth({ token: null, user: null });
-                delete axios.defaults.headers.common['Authorization'];
-            } else {
-     setMessage({ type: 'error', text: errorMsg });
-            }
-            } 
-            
-            finally {
-         setLoading(false);}
-        };
+    setAuth({ token, user });
 
-    return (
-        <div className="form-container">
-            <div className="auth-tabs">
-                <button onClick={() => setIsLogin(true)} className={isLogin ? 'active' : ''}>
-                    Login
-                </button>
-                <button onClick={() => setIsLogin(false)} className={!isLogin ? 'active' : ''}>
-                    Signup
-                </button>
-            </div>
+    if (user.role === "admin") navigate("/admin");
+    else if (user.role === "organizer") navigate("/book");
+    else navigate("/audience-bookings");
 
-            {message.text && <div className={`message-container message-${message.type}`}>{message.text}</div>}
+  };
 
-            <form onSubmit={handleSubmit}>
-                {!isLogin && (
-                    <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input id="name" type="text" name="name" value={formData.name} onChange={handleChange} required />
-                    </div>
-                )}
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input id="email" type="email" name="email" value={formData.email} onChange={handleChange} required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input id="password" type="password" name="password" value={formData.password} onChange={handleChange} required />
-                </div>
-                <button type="submit" disabled={loading} className="btn btn-primary">
-                    {loading ? 'Processing...' : (isLogin ? 'Login' : 'Create Account')}
-                </button>
-            </form>
-        </div>
-    );
+  const inputStyle = {
+  width: "100%",
+  padding: "0.7rem",
+  marginBottom: "1rem",
+  borderRadius: "6px",
+  border: "1px solid #ccc",
+  fontSize: "1rem",
+};
+
+const buttonStyle = {
+  width: "100%",
+  padding: "0.7rem",
+  background: "#6b259aff",
+  color: "#fff",
+  border: "none",
+  borderRadius: "6px",
+  fontSize: "1rem",
+  cursor: "pointer",
+};
+
+
+  return (
+  <div
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#f5f6fa",
+    }}
+  >
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "400px",
+        background: "#fff",
+        padding: "2rem",
+        borderRadius: "10px",
+        boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+      }}
+    >
+      <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+        {isLogin ? "Login" : "Create Account"}
+      </h2>
+
+      <form onSubmit={handleSubmit}>
+        {!isLogin && (
+          <input
+            name="name"
+            placeholder="Full Name"
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          />
+        )}
+
+        <input
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          required
+          style={inputStyle}
+        />
+
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+          style={inputStyle}
+        />
+
+        <button type="submit" style={buttonStyle}>
+          {isLogin ? "Login" : "Register"}
+        </button>
+      </form>
+
+      <p
+        style={{
+          textAlign: "center",
+          marginTop: "1rem",
+          fontSize: "0.9rem",
+        }}
+      >
+        {isLogin ? "New here?" : "Already have an account?"}{" "}
+        <span
+          onClick={() => setIsLogin(!isLogin)}
+          style={{ color: "#6b259aff", cursor: "pointer", fontWeight: "bold" }}
+        >
+          {isLogin ? "Create one" : "Login"}
+        </span>
+      </p>
+    </div>
+  </div>
+);
 };
 
 export default AuthPage;
-

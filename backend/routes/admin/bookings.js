@@ -1,12 +1,16 @@
 import express from "express";
 import Booking from "../../models/booking.js";
 import { authenticate } from "../../middleware/authmiddleware.js";
-import adminMiddleware from "../../middleware/adminMiddleware.js";
+import { authorize } from "../../middleware/authorize.js";
 
 const router = express.Router(); // <<< YOU FORGOT THIS
 
 // GET /api/admin/bookings/all
-router.get("/all", authenticate, adminMiddleware, async (req, res) => {
+router.get(
+  "/all",
+  authenticate,
+  authorize("admin"),
+  async (req, res) => {
   try {
     const bookings = await Booking.find()
       .populate("auditorium", "name location")
@@ -21,7 +25,11 @@ router.get("/all", authenticate, adminMiddleware, async (req, res) => {
 });
 
 
-router.patch("/:id/status", authenticate, adminMiddleware, async (req, res) => {
+router.patch(
+  "/:id/status",
+  authenticate,
+  authorize("admin"),
+  async (req, res) => {
   try {
     const { status } = req.body;
 
