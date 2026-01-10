@@ -169,19 +169,18 @@ const BookingPage = () => {
                 </div>
 
                 {/* Seats selection */}
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label>Number of Seats</label>
                     <input
                         type="number"
                         name="seats"
                         min="1"
-                        max="10"
+                        max="300"
                         value={formData.seats}
                         onChange={handleChange}
                         required
                     />
-                    <small className="hint">Choose up to 10 seats </small>
-                </div>
+                </div> */}
 
                 <button type="submit" disabled={loading} className="submit-btn">
                     {loading ? "Submitting..." : "Submit Booking Request"}

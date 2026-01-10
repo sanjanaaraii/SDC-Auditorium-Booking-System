@@ -19,7 +19,6 @@ const Login = () => {
 
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    // ✅ REAL REDIRECT
     if (user.role === "admin") navigate("/admin");
     else if (user.role === "organizer") navigate("/book");
     else navigate("/audience-bookings");

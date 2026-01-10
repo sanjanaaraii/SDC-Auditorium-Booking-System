@@ -46,7 +46,7 @@ const AuthPage = () => {
 const buttonStyle = {
   width: "100%",
   padding: "0.7rem",
-  background: "#6b259aff",
+  background: "#702963",
   color: "#fff",
   border: "none",
   borderRadius: "6px",
@@ -122,7 +122,7 @@ const buttonStyle = {
         {isLogin ? "New here?" : "Already have an account?"}{" "}
         <span
           onClick={() => setIsLogin(!isLogin)}
-          style={{ color: "#6b259aff", cursor: "pointer", fontWeight: "bold" }}
+          style={{ color: "#702963", cursor: "pointer", fontWeight: "bold" }}
         >
           {isLogin ? "Create one" : "Login"}
         </span>

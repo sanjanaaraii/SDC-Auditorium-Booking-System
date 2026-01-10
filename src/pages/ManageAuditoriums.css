@@ -79,7 +79,7 @@
 .primary-btn {
   margin-top: 18px;
   padding: 10px 15px;
-  background: purple;
+  background: #702963;
   color: white;
   border: none;
   border-radius: 10px;
@@ -87,11 +87,7 @@
   font-weight: 600;
 }
 
-.primary-btn:hover {
-  background: #0b5ed7;
-}
 
-/* Messages */
 .msg {
   padding: 10px;
   border-radius: 8px;

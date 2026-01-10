@@ -73,7 +73,7 @@ textarea {
 .submit-btn {
     margin-top: 10px;
     width: 100%;
-    background: purple;
+    background: #702963;
     color: #fff;
     padding: 12px;
     border: none;
@@ -83,6 +83,4 @@ textarea {
     font-weight: 600;
 }
 
-.submit-btn:hover {
-    background: purple;
-}
+

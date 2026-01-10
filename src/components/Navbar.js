@@ -59,6 +59,11 @@ const Navbar = () => {
                   <li>
                     <NavLink to="/my-bookings">My Bookings</NavLink>
                   </li>
+                  <li>
+                  <NavLink to="/request-organizer">
+                    Request to be Organizer
+                  </NavLink>
+                </li>
                 </>
               )}
 
@@ -77,7 +82,7 @@ const Navbar = () => {
               <NavLink
                 to="/auth"
                 className="btn btn-primary"
-                style={{ width: "auto", padding: "0.5rem 1rem" }}
+                style={{ width: "auto", padding: "0.5rem 1rem",color: "#fff" }}
               >
                 Login / Signup
               </NavLink>

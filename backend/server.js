@@ -16,8 +16,8 @@ import adminUserRoutes from "./routes/admin/users.js";
 import audienceBookingRoutes from "./routes/audience/booking.js";
 
 import audienceEventsRoutes from "./routes/audience/events.js";
-
-
+import audienceOrganizerRequestRoutes from "./routes/audience/organizerRequest.js";
+import adminOrganizerRequestRoutes from "./routes/admin/organizerRequests.js";
 
 dotenv.config();
 
@@ -46,3 +46,15 @@ app.use("/api/admin/users", adminUserRoutes);
 app.get("/", (req, res) => res.send("Backend is running"));
 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+// Audience organizer request
+app.use(
+  "/api/audience/organizerRequest",
+  audienceOrganizerRequestRoutes
+);
+
+// Admin organizer requests
+app.use(
+  "/api/admin/organizer-requests",
+  adminOrganizerRequestRoutes
+);

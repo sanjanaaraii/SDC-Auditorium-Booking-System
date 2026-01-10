@@ -14,7 +14,8 @@ import AdminDashboard from "./pages/AdminDashboard.js";
 import ManageAuditoriums from "./pages/ManageAuditoriums.js";
 import ViewAllBookings from "./pages/ViewAllBookings.js";
 import ManageUsers from "./pages/ManageUsers.js";
-
+import RequestOrganizer from "./pages/RequestOrganizer.jsx";
+import AdminOrganizerRequests from "./pages/AdminOrganizerRequests.js";
 export const AuthContext = createContext();
 
 const App = () => {
@@ -173,6 +174,23 @@ const App = () => {
               }
             />
 
+              <Route
+              path="/request-organizer"
+              element={
+                <PrivateRoute>
+                  <RequestOrganizer />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+            path="/admin/organizer-requests"
+            element={
+              <AdminRoute>
+                <AdminOrganizerRequests />
+              </AdminRoute>
+            }
+          />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
