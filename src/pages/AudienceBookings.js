@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import SeatBookingModal from "../components/SeatBookingModal";
 const AudienceBookings = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -37,21 +38,12 @@ const AudienceBookings = () => {
         <p>No approved events yet.</p>
       ) : (
         events.map((e) => (
-          <div
-            key={e._id}
-            style={{
-              border: "1px solid #ddd",
-              padding: "1rem",
-              marginBottom: "1rem",
-              borderRadius: "8px",
-            }}
-          >
+          <div key={e._id} style={cardStyle}>
             <h3>{e.eventName}</h3>
             <p>{e.description}</p>
 
             <p>
-              <strong>Auditorium:</strong>{" "}
-              {e.auditorium?.name}
+              <strong>Auditorium:</strong> {e.auditorium?.name}
             </p>
 
             <p>
@@ -59,14 +51,28 @@ const AudienceBookings = () => {
               {new Date(e.date).toDateString()}
             </p>
 
-            <p>
-              <strong>Time:</strong> {e.startTime} – {e.endTime}
-            </p>
+            <button onClick={() => setSelectedEvent(e)}>
+              Book
+            </button>
           </div>
         ))
       )}
+
+      {selectedEvent && (
+        <SeatBookingModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
     </div>
   );
+};
+
+const cardStyle = {
+  border: "1px solid #ddd",
+  padding: "1rem",
+  marginBottom: "1rem",
+  borderRadius: "8px",
 };
 
 export default AudienceBookings;

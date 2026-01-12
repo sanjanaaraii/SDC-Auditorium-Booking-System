@@ -69,10 +69,19 @@ const MyBookingsPage = () => {
                                     <strong>Auditorium:</strong> {booking.auditorium.name} – {booking.auditorium.location}
                                 </p>
 
-                                <p className="date">
-                                    {format(new Date(booking.date), "EEEE, MMM d yyyy")} <br />
-                                    {booking.startTime} – {booking.endTime}
-                                </p>
+                                {booking.bookingType === "EVENT" && (
+                            <p className="date">
+                                {format(new Date(booking.date), "EEEE, MMM d yyyy")} <br />
+                                {booking.startTime} – {booking.endTime}
+                            </p>
+                            )}
+
+                                        {booking.bookingType === "SEAT" && (
+                                        <p className="date">
+                                            <strong>Seat:</strong> {booking.seats?.[0]}
+                                        </p>
+                                        )}
+
                             </div>
 
                             {/* Right side status + cancel */}

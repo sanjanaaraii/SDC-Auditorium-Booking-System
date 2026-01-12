@@ -6,7 +6,7 @@ import AuthPage from "./pages/authpage.js";
 import BookingPage from "./pages/BookingPage.js";
 import MyBookingsPage from "./pages/mybookings.js";
 import AudienceBookings from "./pages/AudienceBookings.js";
-
+import QRVerify from "./pages/QRVerify";
 import Navbar from "./components/Navbar.js";
 import HomePage from "./pages/homepage.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
@@ -136,6 +136,8 @@ const App = () => {
                 </PrivateRoute>
               }
             />
+
+              <Route path="/verify/:bookingId" element={<QRVerify />} />
 
             {/* ADMIN */}
             <Route
