@@ -13,11 +13,20 @@ const AdminOrganizerRequests = () => {
 
   const fetchRequests = async () => {
     try {
+      const token = localStorage.getItem("token");
+
       const res = await axios.get(
-        "http://localhost:5000/api/admin/organizer-requests"
+        "http://localhost:5000/api/admin/organizer-requests",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       setRequests(res.data);
     } catch (err) {
+      console.error(err);
       alert("Failed to load requests");
     } finally {
       setLoading(false);
@@ -26,21 +35,31 @@ const AdminOrganizerRequests = () => {
 
   const updateStatus = async (requestId, status) => {
     try {
+      const token = localStorage.getItem("token");
+
       await axios.patch(
         `http://localhost:5000/api/admin/organizer-requests/${requestId}`,
-        { status }
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
+      // Update list
       setRequests((prev) =>
         prev.map((req) =>
           req._id === requestId ? { ...req, status } : req
         )
       );
 
+      // Update selected
       if (selectedRequest?._id === requestId) {
         setSelectedRequest((prev) => ({ ...prev, status }));
       }
     } catch (err) {
+      console.error(err);
       alert("Failed to update request");
     }
   };
@@ -54,7 +73,7 @@ const AdminOrganizerRequests = () => {
       ) : (
         <div className="requests-layout">
 
-          {/* LEFT: Applicants */}
+          {/* LEFT PANEL */}
           <div className="requests-list">
             <h4>Applicants</h4>
             <ul>
@@ -69,7 +88,9 @@ const AdminOrganizerRequests = () => {
                   onClick={() => setSelectedRequest(req)}
                 >
                   <div className="applicant-row">
-                    <span>{req.user.name}</span>
+                    <span>
+                      {req.user?.name || "Deleted User"}
+                    </span>
 
                     {req.status === "Approved" && (
                       <span className="role-badge organizer">
@@ -88,7 +109,7 @@ const AdminOrganizerRequests = () => {
             </ul>
           </div>
 
-          {/* RIGHT: Details */}
+          {/* RIGHT PANEL */}
           <div className="request-details">
             {selectedRequest ? (
               <>
@@ -96,7 +117,9 @@ const AdminOrganizerRequests = () => {
 
                 <div className="detail-row">
                   <span>User</span>
-                  <p>{selectedRequest.user.name}</p>
+                  <p>
+                    {selectedRequest.user?.name || "Deleted User"}
+                  </p>
                 </div>
 
                 <div className="detail-row">
@@ -109,9 +132,8 @@ const AdminOrganizerRequests = () => {
                   <p>{selectedRequest.reason}</p>
                 </div>
 
-                {/* ✅ BUTTONS UNDER REASON */}
-                {(!selectedRequest.status ||
-                  selectedRequest.status === "Pending") && (
+                {/* ACTION BUTTONS */}
+                {selectedRequest.status === "Pending" && (
                   <div className="detail-actions">
                     <button
                       className="accept-btn"

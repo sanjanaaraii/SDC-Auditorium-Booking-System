@@ -12,14 +12,23 @@ const RequestOrganizer = () => {
     setLoading(true);
 
     try {
+      const token = localStorage.getItem("token");
+
       await axios.post(
         "http://localhost:5000/api/audience/organizerRequest",
-        { eventName, reason }
+        { eventName, reason },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       alert("Request sent to admin!");
       setEventName("");
       setReason("");
     } catch (err) {
+      console.error(err);
       alert(err.response?.data?.message || "Request failed");
     } finally {
       setLoading(false);

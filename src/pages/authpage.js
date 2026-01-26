@@ -7,7 +7,12 @@ const API_URL = "http://localhost:5000/api/auth";
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
   const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -17,119 +22,134 @@ const AuthPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const endpoint = isLogin ? "/login" : "/register";
+    // 🔥 CRITICAL FIX: clear old auth before login/register
+    delete axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
-    const res = await axios.post(`${API_URL}${endpoint}`, formData);
-    const { token, user } = res.data;
+    try {
+      const endpoint = isLogin ? "/login" : "/register";
 
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      const res = await axios.post(`${API_URL}${endpoint}`, formData);
+      const { token, user } = res.data;
 
-    setAuth({ token, user });
+      // Save fresh auth
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    if (user.role === "admin") navigate("/admin");
-    else if (user.role === "organizer") navigate("/book");
-    else navigate("/audience-bookings");
+      setAuth({ token, user });
 
+      // Redirect by role
+      if (user.role === "admin") navigate("/admin");
+      else if (user.role === "organizer") navigate("/book");
+      else navigate("/audience-bookings");
+
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Login failed");
+    }
   };
 
   const inputStyle = {
-  width: "100%",
-  padding: "0.7rem",
-  marginBottom: "1rem",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-  fontSize: "1rem",
-};
+    width: "100%",
+    padding: "0.7rem",
+    marginBottom: "1rem",
+    borderRadius: "6px",
+    border: "1px solid #ccc",
+    fontSize: "1rem",
+  };
 
-const buttonStyle = {
-  width: "100%",
-  padding: "0.7rem",
-  background: "#702963",
-  color: "#fff",
-  border: "none",
-  borderRadius: "6px",
-  fontSize: "1rem",
-  cursor: "pointer",
-};
-
+  const buttonStyle = {
+    width: "100%",
+    padding: "0.7rem",
+    background: "#702963",
+    color: "#fff",
+    border: "none",
+    borderRadius: "6px",
+    fontSize: "1rem",
+    cursor: "pointer",
+  };
 
   return (
-  <div
-    style={{
-      minHeight: "100vh",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      background: "#f5f6fa",
-    }}
-  >
     <div
       style={{
-        width: "100%",
-        maxWidth: "400px",
-        background: "#fff",
-        padding: "2rem",
-        borderRadius: "10px",
-        boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#f5f6fa",
       }}
     >
-      <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-        {isLogin ? "Login" : "Create Account"}
-      </h2>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "400px",
+          background: "#fff",
+          padding: "2rem",
+          borderRadius: "10px",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+          {isLogin ? "Login" : "Create Account"}
+        </h2>
 
-      <form onSubmit={handleSubmit}>
-        {!isLogin && (
+        <form onSubmit={handleSubmit}>
+          {!isLogin && (
+            <input
+              name="name"
+              placeholder="Full Name"
+              onChange={handleChange}
+              required
+              style={inputStyle}
+            />
+          )}
+
           <input
-            name="name"
-            placeholder="Full Name"
+            name="email"
+            placeholder="Email"
             onChange={handleChange}
             required
             style={inputStyle}
           />
-        )}
 
-        <input
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          required
-          style={inputStyle}
-        />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleChange}
-          required
-          style={inputStyle}
-        />
+          <button type="submit" style={buttonStyle}>
+            {isLogin ? "Login" : "Register"}
+          </button>
+        </form>
 
-        <button type="submit" style={buttonStyle}>
-          {isLogin ? "Login" : "Register"}
-        </button>
-      </form>
-
-      <p
-        style={{
-          textAlign: "center",
-          marginTop: "1rem",
-          fontSize: "0.9rem",
-        }}
-      >
-        {isLogin ? "New here?" : "Already have an account?"}{" "}
-        <span
-          onClick={() => setIsLogin(!isLogin)}
-          style={{ color: "#702963", cursor: "pointer", fontWeight: "bold" }}
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "1rem",
+            fontSize: "0.9rem",
+          }}
         >
-          {isLogin ? "Create one" : "Login"}
-        </span>
-      </p>
+          {isLogin ? "New here?" : "Already have an account?"}{" "}
+          <span
+            onClick={() => setIsLogin(!isLogin)}
+            style={{
+              color: "#702963",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            {isLogin ? "Create one" : "Login"}
+          </span>
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default AuthPage;
