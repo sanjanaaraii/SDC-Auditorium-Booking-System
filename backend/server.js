@@ -18,7 +18,7 @@ import audienceBookingRoutes from "./routes/audience/booking.js";
 import audienceEventsRoutes from "./routes/audience/events.js";
 import audienceOrganizerRequestRoutes from "./routes/audience/organizerRequest.js";
 import adminOrganizerRequestRoutes from "./routes/admin/organizerRequests.js";
-
+import adminStatsRoutes from "./routes/admin/stats.js";
 dotenv.config();
 
 const app = express();
@@ -42,6 +42,9 @@ app.use("/api/auditoriums", auditoriumRoutes);
 app.use("/api/admin/auditoriums", adminAuditoriumRoutes);
 app.use("/api/admin/bookings", adminBookingRoutes);
 app.use("/api/admin/users", adminUserRoutes);
+
+
+app.use("/api/admin", adminStatsRoutes);
 
 app.get("/", (req, res) => res.send("Backend is running"));
 

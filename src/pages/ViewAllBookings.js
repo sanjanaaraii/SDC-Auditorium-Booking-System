@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
-import "./ViewAllBookings.css";  // <— IMPORTANT
+import "./ViewAllBookings.css";  
 
 const API_URL = 'http://localhost:5000/api/admin/bookings/all';
 
@@ -79,9 +79,15 @@ const ViewAllBookings = () => {
                             </p>
 
                             <p className="info small">
-                                {format(new Date(booking.date), "EEEE, MMM d yyyy")} <br/>
-                                {booking.startTime} – {booking.endTime}
-                            </p>
+                                {booking.bookingType === "EVENT" && booking.date ? (
+                                    <>
+                                    {format(new Date(booking.date), "EEEE, MMM d yyyy")} <br />
+                                    {booking.startTime} – {booking.endTime}
+                                    </>
+                                ) : (
+                                    <span>Seat booking (no event date)</span>
+                                )}
+                                </p>
 
                             {booking.status === "Pending" && (
                                 <div className="action-row">
