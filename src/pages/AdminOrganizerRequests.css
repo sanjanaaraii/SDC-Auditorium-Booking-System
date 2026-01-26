@@ -1,0 +1,90 @@
+.organizer-requests-page {
+  padding: 2rem;
+  background-color: #f7f3f6;
+  min-height: 100vh;
+}
+
+.page-title {
+  margin-bottom: 1.5rem;
+  color: #702963;
+}
+
+/* Layout */
+.requests-layout {
+  display: flex;
+  gap: 2rem;
+}
+
+/* LEFT PANEL */
+.requests-list {
+  width: 28%;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.requests-list h4 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.requests-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.requests-list li {
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.requests-list li:hover {
+  background-color: #f2edf1;
+}
+
+.requests-list li.active {
+  background-color: #702963;
+  color: white;
+}
+
+/* RIGHT PANEL */
+.request-details {
+  width: 72%;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.request-details h3 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Detail rows */
+.detail-row {
+  margin-bottom: 1rem;
+}
+
+.detail-row span {
+  font-size: 0.85rem;
+  color: #777;
+  display: block;
+}
+
+.detail-row p {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  color: #222;
+}
+
+/* Placeholder */
+.placeholder {
+  color: #777;
+  font-style: italic;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./AdminOrganizerRequests.css";
 
 const AdminOrganizerRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -24,38 +25,57 @@ const AdminOrganizerRequests = () => {
   };
 
   return (
-    <div>
-      <h2>Organizer Requests</h2>
+    <div className="organizer-requests-page">
+      <h2 className="page-title">Organizer Requests</h2>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div style={{ display: "flex", gap: "2rem" }}>
+        <div className="requests-layout">
           
-          {/* LEFT: List of applicants */}
-          <ul style={{ width: "30%" }}>
-            {requests.map((req) => (
-              <li
-                key={req._id}
-                style={{ cursor: "pointer", marginBottom: "0.5rem" }}
-                onClick={() => setSelectedRequest(req)}
-              >
-                {req.user.name}
-              </li>
-            ))}
-          </ul>
+          {/* LEFT: Applicants */}
+          <div className="requests-list">
+            <h4>Applicants</h4>
+            <ul>
+              {requests.map((req) => (
+                <li
+                  key={req._id}
+                  className={
+                    selectedRequest?._id === req._id ? "active" : ""
+                  }
+                  onClick={() => setSelectedRequest(req)}
+                >
+                  {req.user.name}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* RIGHT: Details */}
-          <div style={{ width: "70%" }}>
+          <div className="request-details">
             {selectedRequest ? (
               <>
-                <h3>Event Details</h3>
-                <p><strong>User:</strong> {selectedRequest.user.name}</p>
-                <p><strong>Event:</strong> {selectedRequest.eventName}</p>
-                <p><strong>Reason:</strong> {selectedRequest.reason}</p>
+                <h3>Request Details</h3>
+
+                <div className="detail-row">
+                  <span>User</span>
+                  <p>{selectedRequest.user.name}</p>
+                </div>
+
+                <div className="detail-row">
+                  <span>Event</span>
+                  <p>{selectedRequest.eventName}</p>
+                </div>
+
+                <div className="detail-row">
+                  <span>Reason</span>
+                  <p>{selectedRequest.reason}</p>
+                </div>
               </>
             ) : (
-              <p>Select a request to view details</p>
+              <p className="placeholder">
+                Select a request to view details
+              </p>
             )}
           </div>
 
