@@ -88,3 +88,58 @@
   color: #777;
   font-style: italic;
 }
+/* Action buttons under Reason */
+.detail-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Base button style */
+.detail-actions button {
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* ACCEPT */
+.accept-btn {
+  background-color: #702963; /* primary theme color */
+  color: #ffffff;
+}
+
+.accept-btn:hover {
+  background-color: #5c1f4f; /* darker shade */
+  transform: translateY(-1px);
+}
+
+/* DECLINE */
+.decline-btn {
+  background-color: #f2edf1; /* soft neutral */
+  color: #702963;
+  border: 1px solid #702963;
+}
+
+.decline-btn:hover {
+  background-color: #e6dce3;
+  transform: translateY(-1px);
+}
+
+/* Status text */
+.status-text {
+  margin-top: 1rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.status-text.approved {
+  color: #702963;
+}
+
+.status-text.rejected {
+  color: #777;
+}
