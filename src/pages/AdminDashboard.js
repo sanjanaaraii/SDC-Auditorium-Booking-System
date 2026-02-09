@@ -6,7 +6,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // 🔹 Dashboard stats (mock data for now)
+ 
   const [stats, setStats] = useState({
     auditoriums: 0,
     bookings: 0,
@@ -35,7 +35,7 @@ const AdminDashboard = () => {
 
   return (
     <>
-      {/* ☰ */}
+     
       {!isSidebarOpen && (
         <button className="menu-btn" onClick={() => setIsSidebarOpen(true)}>
           ☰
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
         </button>
       </aside>
 
-      {/* Main Content */}
+     
       <main className="content">
         <h1>Welcome, Admin 👋</h1>
         <p>
@@ -74,7 +74,6 @@ const AdminDashboard = () => {
           and control user access.
         </p>
 
-        {/* 🔹 STATS CARDS */}
         <div className="stats-grid">
           <div className="stat-card">
             <h4>Total Auditoriums</h4>

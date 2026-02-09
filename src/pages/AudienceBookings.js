@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SeatBookingModal from "../components/SeatBookingModal";
+import "./AudienceBookings.css";
 const AudienceBookings = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,48 +32,46 @@ const AudienceBookings = () => {
   if (loading) return <p>Loading events...</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Upcoming Events</h1>
+  <div className="page-container">
+    <h1>Upcoming Events</h1>
 
-      {events.length === 0 ? (
-        <p>No approved events yet.</p>
-      ) : (
-        events.map((e) => (
-          <div key={e._id} style={cardStyle}>
+    {events.length === 0 ? (
+      <p>No approved events yet.</p>
+    ) : (
+      <div className="events-grid">
+        {events.map((e) => (
+          <div key={e._id} className="event-card">
             <h3>{e.eventName}</h3>
-            <p>{e.description}</p>
 
-            <p>
+            <p className="event-desc">{e.description}</p>
+
+            <p className="event-meta">
               <strong>Auditorium:</strong> {e.auditorium?.name}
             </p>
 
-            <p>
+            <p className="event-meta">
               <strong>Date:</strong>{" "}
               {new Date(e.date).toDateString()}
             </p>
 
-            <button onClick={() => setSelectedEvent(e)}>
+            <button
+              className="book-btn"
+              onClick={() => setSelectedEvent(e)}
+            >
               Book
             </button>
           </div>
-        ))
-      )}
+        ))}
+      </div>
+    )}
 
-      {selectedEvent && (
-        <SeatBookingModal
-          event={selectedEvent}
-          onClose={() => setSelectedEvent(null)}
-        />
-      )}
-    </div>
-  );
+    {selectedEvent && (
+      <SeatBookingModal
+        event={selectedEvent}
+        onClose={() => setSelectedEvent(null)}
+      />
+    )}
+  </div>
+);
 };
-
-const cardStyle = {
-  border: "1px solid #ddd",
-  padding: "1rem",
-  marginBottom: "1rem",
-  borderRadius: "8px",
-};
-
 export default AudienceBookings;

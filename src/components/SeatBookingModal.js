@@ -45,20 +45,19 @@ const SeatBookingModal = ({ event, onClose }) => {
           <>
             <div style={seatGrid}>
               {seats.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setSelectedSeat(s)}
-                  style={{
-                    padding: "10px",
-                    backgroundColor: selectedSeat === s ? "#4CAF50" : "#eee",
-                  }}
-                >
-                  {s}
-                </button>
+            <button
+              key={s}
+              onClick={() => setSelectedSeat(s)}
+              style={seatButton(selectedSeat === s)}
+            >
+              {s}
+            </button>
+
               ))}
             </div>
 
-            <button onClick={bookSeat}>Confirm Booking</button>
+            <button style={confirmButton}
+             onClick={bookSeat}>Confirm Booking</button>
           </>
         ) : (
           <>
@@ -72,6 +71,19 @@ const SeatBookingModal = ({ event, onClose }) => {
       </div>
     </div>
   );
+};
+const confirmButton = {
+  marginTop: "1rem",
+  padding: "12px",
+  width: "100%",
+  backgroundColor: "#63385a",
+  color: "#ffffff",
+  border: "none",
+  borderRadius: "8px",
+  fontSize: "15px",
+  fontWeight: "600",
+  cursor: "pointer",
+  transition: "background-color 0.2s ease",
 };
 
 const overlay = {
@@ -103,5 +115,15 @@ const seatGrid = {
   gap: "10px",
   marginBottom: "1rem",
 };
+const seatButton = (isSelected) => ({
+  padding: "10px 0",
+  borderRadius: "6px",
+  border: isSelected ? "2px solid #8d5f85" : "1px solid #d1d5db",
+  backgroundColor: isSelected ? "#b991b1" : "#f9fafb",
+  fontWeight: "600",
+  cursor: "pointer",
+  transition: "all 0.2s ease",
+  outline: "none",
+});
 
 export default SeatBookingModal;
