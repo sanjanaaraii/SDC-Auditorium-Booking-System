@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
- 
+   
   const [stats, setStats] = useState({
     auditoriums: 0,
     bookings: 0,
@@ -34,39 +31,7 @@ const AdminDashboard = () => {
 
 
   return (
-    <>
-     
-      {!isSidebarOpen && (
-        <button className="menu-btn" onClick={() => setIsSidebarOpen(true)}>
-          ☰
-        </button>
-      )}
-
-      {isSidebarOpen && (
-        <div className="overlay" onClick={() => setIsSidebarOpen(false)} />
-      )}
-
-      <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-        {isSidebarOpen && (
-          <button className="close-btn" onClick={() => setIsSidebarOpen(false)}>
-            ✕
-          </button>
-        )}
-
-        <h3 className="sidebar-title">Admin Panel</h3>
-
-        <button onClick={() => navigate('/admin/auditoriums')}>
-          Manage Auditoriums
-        </button>
-        <button onClick={() => navigate('/admin/bookings')}>
-          View Bookings
-        </button>
-        <button onClick={() => navigate('/admin/users')}>
-          Manage Users
-        </button>
-      </aside>
-
-     
+    <>     
       <main className="content">
         <h1>Welcome, Admin 👋</h1>
         <p>

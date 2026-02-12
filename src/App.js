@@ -10,7 +10,7 @@ import QRVerify from "./pages/QRVerify";
 import Navbar from "./components/Navbar.js";
 import HomePage from "./pages/homepage.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
-
+import AdminLayout from "./pages/AdminLayout";
 import ManageAuditoriums from "./pages/ManageAuditoriums.js";
 import ViewAllBookings from "./pages/ViewAllBookings.js";
 import ManageUsers from "./pages/ManageUsers.js";
@@ -88,113 +88,88 @@ const App = () => {
         <Navbar />
         <main className="container">
           <Routes>
-            <Route path="/" element={<HomePage />} />
 
-            {/* AUTH */}
-            <Route
-              path="/auth"
-              element={
-                auth.token ? (
-                  auth.user?.role === "admin" ? (
-                    <Navigate to="/admin" />
-                  ) : auth.user?.role === "organizer" ? (
-                    <Navigate to="/book" />
-                  ) : (
-                    <Navigate to="/events" />
-                  )
-                ) : (
-                  <AuthPage />
-                )
-              }
-            />
+  <Route path="/" element={<HomePage />} />
 
-            {/* ORGANIZER */}
-            <Route
-              path="/book"
-              element={
-                <OrganizerRoute>
-                  <BookingPage />
-                </OrganizerRoute>
-              }
-            />
+  {/* AUTH */}
+  <Route
+    path="/auth"
+    element={
+      auth.token ? (
+        auth.user?.role === "admin" ? (
+          <Navigate to="/admin" />
+        ) : auth.user?.role === "organizer" ? (
+          <Navigate to="/book" />
+        ) : (
+          <Navigate to="/events" />
+        )
+      ) : (
+        <AuthPage />
+      )
+    }
+  />
 
-            {/* AUDIENCE */}
-            <Route
-              path="/events"
-              element={
-                <PrivateRoute>
-                  <AudienceBookings />
-                </PrivateRoute>
-              }
-            />
+  {/* ORGANIZER */}
+  <Route
+    path="/book"
+    element={
+      <OrganizerRoute>
+        <BookingPage />
+      </OrganizerRoute>
+    }
+  />
 
-            <Route
-              path="/my-bookings"
-              element={
-                <PrivateRoute>
-                  <MyBookingsPage />
-                </PrivateRoute>
-              }
-            />
+  {/* AUDIENCE */}
+  <Route
+    path="/events"
+    element={
+      <PrivateRoute>
+        <AudienceBookings />
+      </PrivateRoute>
+    }
+  />
 
-              <Route path="/verify/:bookingId" element={<QRVerify />} />
+  <Route
+    path="/my-bookings"
+    element={
+      <PrivateRoute>
+        <MyBookingsPage />
+      </PrivateRoute>
+    }
+  />
 
-            {/* ADMIN */}
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              }
-            />
+  <Route path="/verify/:bookingId" element={<QRVerify />} />
 
-            <Route
-              path="/admin/auditoriums"
-              element={
-                <AdminRoute>
-                  <ManageAuditoriums />
-                </AdminRoute>
-              }
-            />
+  {/* ADMIN (Nested Layout) */}
+  <Route
+    path="/admin"
+    element={
+      <AdminRoute>
+        <AdminLayout />
+      </AdminRoute>
+    }
+  >
+    <Route index element={<AdminDashboard />} />
+    <Route path="auditoriums" element={<ManageAuditoriums />} />
+    <Route path="bookings" element={<ViewAllBookings />} />
+    <Route path="users" element={<ManageUsers />} />
+    <Route path="organizer-requests" element={<AdminOrganizerRequests />} />
+  </Route>
 
-            <Route
-              path="/admin/bookings"
-              element={
-                <AdminRoute>
-                  <ViewAllBookings />
-                </AdminRoute>
-              }
-            />
+  {/* REQUEST ORGANIZER */}
+  <Route
+    path="/request-organizer"
+    element={
+      <PrivateRoute>
+        <RequestOrganizer />
+      </PrivateRoute>
+    }
+  />
 
-            <Route
-              path="/admin/users"
-              element={
-                <AdminRoute>
-                  <ManageUsers />
-                </AdminRoute>
-              }
-            />
+  <Route path="*" element={<Navigate to="/" />} />
 
-              <Route
-              path="/request-organizer"
-              element={
-                <PrivateRoute>
-                  <RequestOrganizer />
-                </PrivateRoute>
-              }
-            />
+</Routes>
 
-            <Route
-            path="/admin/organizer-requests"
-            element={
-              <AdminRoute>
-                <AdminOrganizerRequests />
-              </AdminRoute>
-            }
-          />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
         </main>
       </BrowserRouter>
     </AuthContext.Provider>
