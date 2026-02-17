@@ -22,7 +22,7 @@ const AuthPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 🔥 CRITICAL FIX: clear old auth before login/register
+    
     delete axios.defaults.headers.common["Authorization"];
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -33,7 +33,7 @@ const AuthPage = () => {
       const res = await axios.post(`${API_URL}${endpoint}`, formData);
       const { token, user } = res.data;
 
-      // Save fresh auth
+     
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -76,7 +76,8 @@ const AuthPage = () => {
       style={{
         minHeight: "100vh",
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
+      paddingTop: "80px",
         justifyContent: "center",
         background: "#f5f6fa",
       }}
