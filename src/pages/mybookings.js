@@ -118,9 +118,11 @@ console.log("ROLE:", role);
     <h3 className="event-title">{booking.eventName}</h3>
 
     <p className="info">
-        <strong>Auditorium:</strong> {booking.auditorium.name} – {booking.auditorium.location}
+    <strong>Auditorium:</strong>{" "}
+    {booking.auditorium
+        ? `${booking.auditorium.name} – ${booking.auditorium.location}`
+        : "Auditorium removed"}
     </p>
-
     {booking.bookingType === "EVENT" && (
         <>
             <p className="date">

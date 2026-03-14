@@ -22,29 +22,24 @@ const AuthPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
     delete axios.defaults.headers.common["Authorization"];
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
     try {
       const endpoint = isLogin ? "/login" : "/register";
-
       const res = await axios.post(`${API_URL}${endpoint}`, formData);
       const { token, user } = res.data;
 
-     
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       setAuth({ token, user });
 
-      // Redirect by role
       if (user.role === "admin") navigate("/admin");
       else if (user.role === "organizer") navigate("/book");
       else navigate("/audience-bookings");
-
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Login failed");
@@ -58,6 +53,7 @@ const AuthPage = () => {
     borderRadius: "6px",
     border: "1px solid #ccc",
     fontSize: "1rem",
+    boxSizing: "border-box",
   };
 
   const buttonStyle = {
@@ -72,82 +68,108 @@ const AuthPage = () => {
   };
 
   return (
+    // Outer div: full-screen background layer
     <div
       style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "flex-start",
-      paddingTop: "80px",
-        justifyContent: "center",
-        background: "#f5f6fa",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "100vh",
+        width: "100vw",
+        backgroundImage: "url('/muj-bg.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
+      {/* Inner div: centering layer with navbar offset */}
       <div
         style={{
+          height: "100vh",
           width: "100%",
-          maxWidth: "400px",
-          background: "#fff",
-          padding: "2rem",
-          borderRadius: "10px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingTop: "80px",
+          boxSizing: "border-box",
         }}
       >
-        <h2 style={{ textAlign: "center", marginBottom: "1.5rem", fontWeight: "630" }}>
-          {isLogin ? "Login" : "Create Account"}
-        </h2>
+        {/* Login Card */}
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "400px",
+            background: "#fff",
+            padding: "2rem",
+            borderRadius: "10px",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+          }}
+        >
+          <h2
+            style={{
+              textAlign: "center",
+              marginBottom: "1.5rem",
+              fontWeight: "630",
+              marginTop: 0,
+            }}
+          >
+            {isLogin ? "Login" : "Create Account"}
+          </h2>
 
-        <form onSubmit={handleSubmit}>
-          {!isLogin && (
+          <form onSubmit={handleSubmit}>
+            {!isLogin && (
+              <input
+                name="name"
+                placeholder="Full Name"
+                onChange={handleChange}
+                required
+                style={inputStyle}
+              />
+            )}
+
             <input
-              name="name"
-              placeholder="Full Name"
+              name="email"
+              placeholder="Email"
               onChange={handleChange}
               required
               style={inputStyle}
             />
-          )}
 
-          <input
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            required
-            style={inputStyle}
-          />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+              required
+              style={inputStyle}
+            />
 
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={handleChange}
-            required
-            style={inputStyle}
-          />
+            <button type="submit" style={buttonStyle}>
+              {isLogin ? "Login" : "Register"}
+            </button>
+          </form>
 
-          <button type="submit" style={buttonStyle}>
-            {isLogin ? "Login" : "Register"}
-          </button>
-        </form>
-
-        <p
-          style={{
-            textAlign: "center",
-            marginTop: "1rem",
-            fontSize: "0.9rem",
-          }}
-        >
-          {isLogin ? "New here?" : "Already have an account?"}{" "}
-          <span
-            onClick={() => setIsLogin(!isLogin)}
+          <p
             style={{
-              color: "#702963",
-              cursor: "pointer",
-              fontWeight: "bold",
+              textAlign: "center",
+              marginTop: "1rem",
+              fontSize: "0.9rem",
+              marginBottom: 0,
             }}
           >
-            {isLogin ? "Create one" : "Login"}
-          </span>
-        </p>
+            {isLogin ? "New here?" : "Already have an account?"}{" "}
+            <span
+              onClick={() => setIsLogin(!isLogin)}
+              style={{
+                color: "#702963",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              {isLogin ? "Create one" : "Login"}
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
