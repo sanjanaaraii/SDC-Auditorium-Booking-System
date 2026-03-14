@@ -10,7 +10,6 @@ const auditoriumSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ✅ SAFE MODEL EXPORT (IMPORTANT)
 const Auditorium =
   mongoose.models.Auditorium ||
   mongoose.model("Auditorium", auditoriumSchema);

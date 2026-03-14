@@ -8,7 +8,6 @@ import MyBookingsPage from "./pages/mybookings.js";
 import AudienceBookings from "./pages/AudienceBookings.js";
 import QRVerify from "./pages/QRVerify";
 import Navbar from "./components/Navbar.js";
-import HomePage from "./pages/homepage.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
 import AdminLayout from "./pages/AdminLayout";
 import ManageAuditoriums from "./pages/ManageAuditoriums.js";
@@ -89,7 +88,7 @@ const App = () => {
         <main className="container">
           <Routes>
 
-  <Route path="/" element={<HomePage />} />
+  <Route path="/" element={<AuthPage />} />
 
   {/* AUTH */}
   <Route
