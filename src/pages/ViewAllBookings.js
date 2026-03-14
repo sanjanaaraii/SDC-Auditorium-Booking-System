@@ -75,7 +75,10 @@ const ViewAllBookings = () => {
                             </p>
 
                             <p className="info">
-                                <strong>Auditorium:</strong> {booking.auditorium.name} – {booking.auditorium.location}
+                                <strong>Auditorium:</strong> 
+                                    {booking.auditorium
+                                    ? `${booking.auditorium.name} – ${booking.auditorium.location}`
+                                    : "Auditorium removed"}
                             </p>
 
                             <p className="info small">

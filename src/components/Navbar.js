@@ -3,8 +3,6 @@ import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../App.js";
 
-
-
 const Navbar = () => {
   const { auth, logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -17,9 +15,17 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="navbar-container">
-        <NavLink to="/" className="navbar-brand">
-          AudiBooker
-        </NavLink>
+        <div className="navbar-brand">
+          <img src="/muj-logo.png" alt="MUJ Logo" className="nav-logo" />
+
+          <img src="/sdc-logo.png" alt="SDC Logo" className="nav-logo" />
+
+          <div className="nav-divider"></div>
+
+          <span className="nav-title">
+            AudiBooker
+          </span>
+        </div>
 
         <ul className="navbar-links">
           {auth.token ? (
@@ -28,7 +34,7 @@ const Navbar = () => {
               {auth.user?.role === "admin" && (
                 <>
                   <li>
-                    <NavLink to="/admin">Admin Dashboard</NavLink>
+                    <NavLink to="/admin" end>Admin Dashboard</NavLink>
                   </li>
                   <li>
                     <NavLink to="/admin/organizer-requests">

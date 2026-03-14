@@ -92,7 +92,7 @@ const AuthPage = () => {
           boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
         }}
       >
-        <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+        <h2 style={{ textAlign: "center", marginBottom: "1.5rem", fontWeight: "630" }}>
           {isLogin ? "Login" : "Create Account"}
         </h2>
 

@@ -8,107 +8,113 @@ body {
     sans-serif;
 }
 
+/* ── Hamburger Button ── */
 .menu-btn {
   position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 300;
-
-  font-size: 1.6rem;
-  background-color: #1e293b;
-  color: #ffffff;
-
+  top: 90px;           
+  left: 1.25rem;
+  z-index: 90;         
+  background-color: #2D1A2E;
+  color: #E8BADF;
   border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.7rem;
-
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.25rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  transition: background-color 0.2s;
 }
 
-.menu-btn {
+.menu-btn:hover {
   background-color: #702963;
 }
 
-
+/* ── Overlay ── */
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.45);
-  z-index: 200;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 110;        /* above content, below sidebar */
 }
 
-
+/* ── Sidebar ── */
 .sidebar {
   position: fixed;
   top: 0;
-  left: -260px;
-  width: 260px;
+  left: 0;
   height: 100vh;
-
-  background-color: #702963;
-  color: #ffffff;
-
-  padding: 1.5rem 1.25rem;
-  transition: left 0.3s ease;
-
-  z-index: 250;
+  width: 240px;
+  background-color: #2D1A2E;
+  z-index: 120;        /* topmost layer */
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.3);
 }
 
 .sidebar.open {
-  left: 0;
+  transform: translateX(0);
 }
-
-
-.close-btn {
-  position: absolute;
-  top: 14px;
-  right: 1px;
-  font: bolder;
-  background: none;
-  border: none;
-  color: #ffffff;
-
-  font-size: 1.25rem;
-  cursor: pointer;
-}
-
 
 .sidebar-title {
-  margin-top: 2.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.2rem;
-  font-weight: 600;
+  color: #E8BADF;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  padding-top: 2.5rem;  /* clears the close button */
 }
 
-
 .sidebar button {
-  display: block;
-  width: 100%;
-
-  padding: 0.7rem 0.8rem;
-  margin-bottom: 0.5rem;
-
   background: none;
   border: none;
-  color: #ffffff;
-
+  color: rgba(255,255,255,0.8);
   text-align: left;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
   font-size: 0.95rem;
-
-  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s, color 0.2s;
+  width: 100%;
 }
 
 .sidebar button:hover {
-  background-color: #4F1D44;
+  background-color: rgba(112, 41, 99, 0.5);
+  color: #fff;
 }
 
+/* ── Close Button ── */
+.close-btn {
+  position: absolute !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255,255,255,0.1) !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+  font-size: 0.9rem !important;
+}
+
+.close-btn:hover {
+  background-color: rgba(255,255,255,0.2) !important;
+}
+
+/* ── Main Content ── */
 .content {
-  min-height: 100vh;
-  padding: 3rem 2.5rem;
-  background-color: #f4f6f8;
+  padding: 2rem 1.5rem;
+  margin-top: 0;    
 }
 
 .content h1 {
