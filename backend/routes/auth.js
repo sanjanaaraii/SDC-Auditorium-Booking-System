@@ -34,7 +34,8 @@ router.post("/register", async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        phone: user.phone
       }
     });
   } catch (err) {
@@ -73,11 +74,47 @@ router.post("/login", async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        phone: user.phone
       }
     });
   } catch (err) {
     console.error("Login error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+router.put("/profile", async (req, res) => {
+  try {
+    
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const userId = decoded.id;
+
+    const { phone } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { phone },
+      { new: true }
+    );
+
+    res.json({
+      id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      phone: updatedUser.phone,
+    });
+  } catch (err) {
+    console.error("Update profile error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });

@@ -15,12 +15,13 @@ const SeatBookingModal = ({ event, onClose }) => {
     }
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/audience/bookings",
-        {
-          auditoriumId: event.auditorium._id,
-          seats: [selectedSeat],
-        },
+         const res = await axios.post(
+      "http://localhost:5000/api/audience/bookings",
+      {
+        auditoriumId: event.auditorium._id,
+        eventId: event._id, 
+        seats: [selectedSeat],
+      },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

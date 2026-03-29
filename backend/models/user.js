@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "organizer", "audience"],
       default: "audience",
     },
+    phone: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

@@ -14,14 +14,16 @@ router.post(
   authorize("audience"),
   async (req, res) => {
     try {
-      const { auditoriumId, seats } = req.body;
+      const { auditoriumId, seats, eventId } = req.body;
 
-      if (!auditoriumId || !Array.isArray(seats) || seats.length === 0) {
+      //  validation
+      if (!auditoriumId || !eventId || !Array.isArray(seats) || seats.length === 0) {
         return res.status(400).json({
-          message: "Auditorium ID and seats are required"
+          message: "Auditorium ID, event ID and seats are required"
         });
       }
 
+      // validate auditorium ID
       if (!mongoose.Types.ObjectId.isValid(auditoriumId)) {
         return res.status(400).json({ message: "Invalid auditorium ID" });
       }
@@ -31,9 +33,23 @@ router.post(
         return res.status(404).json({ message: "Auditorium not found" });
       }
 
-      // Check seat conflicts
+      //  check if user already booked THIS event
+      const alreadyBooked = await Booking.findOne({
+        user: req.user._id,
+        eventId: eventId,
+        bookingType: "SEAT",
+        status: { $ne: "Cancelled" }
+      });
+
+      if (alreadyBooked) {
+        return res.status(400).json({
+          message: "You already booked this event"
+        });
+      }
+
+      //  check seat conflicts (same event only)
       const existingBookings = await Booking.find({
-        auditorium: auditoriumId,
+        eventId: eventId, 
         seats: { $in: seats },
         status: { $ne: "Cancelled" }
       });
@@ -44,9 +60,11 @@ router.post(
         });
       }
 
+      //  create booking
       const booking = new Booking({
         user: req.user._id,
         auditorium: auditoriumId,
+        eventId: eventId, 
         seats,
         bookingType: "SEAT",
         status: "Confirmed"
@@ -54,7 +72,11 @@ router.post(
 
       await booking.save();
 
-      res.status(201).json({ message: "Booking successful", booking });
+      res.status(201).json({
+        message: "Booking successful",
+        booking
+      });
+
     } catch (err) {
       console.error("Audience booking error:", err);
       res.status(500).json({ message: "Server error" });
@@ -74,6 +96,7 @@ router.get(
         bookingType: "SEAT"
       })
         .populate("auditorium", "name location")
+        .populate("eventId", "_id eventName")
         .sort({ createdAt: -1 });
 
       res.json(bookings);

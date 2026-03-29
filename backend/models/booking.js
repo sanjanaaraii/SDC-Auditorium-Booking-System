@@ -13,12 +13,14 @@ const bookingSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
     auditorium: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Auditorium",
       required: true,
     },
 
+    // EVENT DETAILS (for EVENT type)
     eventName: {
       type: String,
       required: function () {
@@ -26,6 +28,7 @@ const bookingSchema = new mongoose.Schema(
       },
     },
     description: { type: String },
+
     date: {
       type: Date,
       required: function () {
@@ -45,8 +48,18 @@ const bookingSchema = new mongoose.Schema(
       },
     },
 
+    // SEAT BOOKING
     seats: {
       type: [String],
+      required: function () {
+        return this.bookingType === "SEAT";
+      },
+    },
+
+    // ✅ NEW FIELD (IMPORTANT)
+    eventId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
       required: function () {
         return this.bookingType === "SEAT";
       },
@@ -61,12 +74,6 @@ const bookingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-bookingSchema.index(
-  { auditorium: 1, date: 1, startTime: 1, endTime: 1 },
-  { unique: false }
-);
-
-// ✅ SAFE MODEL EXPORT
 const Booking =
   mongoose.models.Booking || mongoose.model("Booking", bookingSchema);
 

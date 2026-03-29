@@ -1,0 +1,328 @@
+/* ─── ProfilePage.css ─────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Syne:wght@700&display=swap");
+
+/* ── Variables ── */
+:root {
+  --bg: #f5f3ee;
+  --card-bg: #ffffff;
+  --border: #e2ddd6;
+  --text-primary: #1a1714;
+  --text-secondary: #7a746c;
+  --accent: #c84b2f;
+  --accent-hover: #a83a21;
+  --success: #2d7a4f;
+  --error: #c84b2f;
+  --input-focus: #c84b2f33;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  --transition: 0.2s ease;
+}
+
+/* ── Wrapper ── */
+.profile-page {
+  min-height: 100vh;
+  background-color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  font-family: "DM Sans", sans-serif;
+}
+
+/* ── Card ── */
+.profile-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 40px 44px;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ── Header ── */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: "Syne", sans-serif;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.profile-title {
+  font-family: "Syne", sans-serif;
+  font-size: 22px;
+  color: var(--text-primary);
+  margin: 0 0 2px;
+  letter-spacing: -0.3px;
+}
+
+.profile-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ── Info rows ── */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.info-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-secondary);
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.role-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  background: #c84b2f14;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+}
+
+/* ── Phone field ── */
+.phone-field {
+  margin-bottom: 16px;
+}
+
+.phone-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.phone-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.phone-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-secondary);
+  pointer-events: none;
+  font-size: 15px;
+}
+
+.phone-input {
+  width: 100%;
+  padding: 11px 14px 11px 38px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  box-sizing: border-box;
+}
+
+.phone-input::placeholder {
+  color: #b5b0a8;
+}
+
+.phone-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--input-focus);
+}
+
+.phone-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Feedback message ── */
+.feedback-msg {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border-radius: 7px;
+  animation: fadeIn 0.2s ease;
+}
+
+.feedback-msg.success {
+  color: var(--success);
+  background: #2d7a4f14;
+  border: 1px solid #2d7a4f30;
+}
+
+.feedback-msg.error {
+  color: var(--error);
+  background: #c84b2f14;
+  border: 1px solid #c84b2f30;
+}
+
+/* ── Save button ── */
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition), opacity var(--transition);
+  letter-spacing: 0.2px;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.save-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Loading state ── */
+.profile-loading {
+  font-family: "DM Sans", sans-serif;
+  color: var(--text-secondary);
+  font-size: 14px;
+  padding: 40px;
+  text-align: center;
+}
+
+/* ── Animation ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .profile-card {
+    padding: 28px 20px;
+  }
+}
+
+/* ─── Navbar Profile Dropdown ─────────────────────────────────────────────── */
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 240px;
+  background: #ffffff;
+  border: 1px solid #e2ddd6;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+  z-index: 200;
+  animation: dropdownFadeIn 0.18s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.profile-dropdown p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  color: #1a1714;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.profile-dropdown p strong {
+  font-weight: 600;
+  color: #7a746c;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  padding: 8px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+  margin-top: 6px;
+}
+
+/* Edit Phone button */
+.profile-dropdown button:first-of-type {
+  color: #702963;
+  background: #c84b2f14;
+  border: 1px solid #c84b2f30;
+}
+
+.profile-dropdown button:first-of-type:hover {
+  background: #c84b2f22;
+}
+
+/* Logout button */
+.profile-dropdown button:last-of-type {
+  color: #ffffff;
+  background: #702963;
+}
+
+.profile-dropdown button:last-of-type:hover {
+  background: #ae67a1;
+}

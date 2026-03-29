@@ -57,9 +57,9 @@ router.post(
         });
       }
 
-      // 🔥 FIX IS HERE
+      
       const newBooking = new Booking({
-        bookingType: "EVENT",          // ✅ REQUIRED
+        bookingType: "EVENT",        
         auditorium: auditoriumId,
         user: req.user._id,
         eventName,

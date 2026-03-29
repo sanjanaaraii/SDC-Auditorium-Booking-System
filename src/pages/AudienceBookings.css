@@ -53,3 +53,25 @@
 .book-btn:hover {
   background-color: #5a1f4e;
 }
+
+
+/* Normal button */
+.book-btn {
+  position: relative;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+/* Slash effect on hover */
+.book-btn.booked:hover::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: red;
+  transform: rotate(-20deg);
+}
