@@ -1,7 +1,7 @@
 import express from "express";
-import User from "../../models/User.js";
-import Booking from "../../models/Booking.js";
-import Auditorium from "../../models/Auditorium.js";
+import User from "../../models/user.js";
+import Booking from "../../models/booking.js";
+import Auditorium from "../../models/auditorium.js";
 
 const router = express.Router();
 

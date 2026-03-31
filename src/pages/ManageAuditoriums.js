@@ -64,7 +64,7 @@ const ManageAuditoriums = () => {
     <div className="aud-page">
       <h2 className="page-title">Manage Auditoriums</h2>
 
-      {/* Add Auditorium Form */}
+     
       <div className="aud-form-card">
         <h3>Add New Auditorium</h3>
 

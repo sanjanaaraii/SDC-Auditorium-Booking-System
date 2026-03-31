@@ -3,7 +3,7 @@ import Booking from "../../models/booking.js";
 import { authenticate } from "../../middleware/authmiddleware.js";
 import { authorize } from "../../middleware/authorize.js";
 
-const router = express.Router(); // <<< YOU FORGOT THIS
+const router = express.Router(); 
 
 // GET /api/admin/bookings/all
 router.get(

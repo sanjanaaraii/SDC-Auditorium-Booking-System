@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
-import ProfilePage from "./pages/ProfilePage";
 import AuthPage from "./pages/authpage.js";
 import BookingPage from "./pages/BookingPage.js";
 import MyBookingsPage from "./pages/mybookings.js";
@@ -139,7 +138,7 @@ const App = () => {
 
   <Route path="/verify/:bookingId" element={<QRVerify />} />
 
-  {/* ADMIN (Nested Layout) */}
+ 
   <Route
     path="/admin"
     element={

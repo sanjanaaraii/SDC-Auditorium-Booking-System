@@ -8,7 +8,7 @@ const AdminLayout = () => {
 
   return (
     <>
-      {/* Hamburger Button */}
+      
       <button
         className="menu-btn"
         onClick={() => setIsSidebarOpen(true)}
@@ -16,7 +16,7 @@ const AdminLayout = () => {
         ☰
       </button>
 
-      {/* Overlay */}
+     
       {isSidebarOpen && (
         <div
           className="overlay"

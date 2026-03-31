@@ -5,13 +5,12 @@ import { authorize } from "../middleware/authorize.js";
 
 const router = express.Router();
 
-// GET /
-// Fetches all auditoriums (for all authenticated users)
+
 router.get("/", authenticate, async (req, res) => {
   try {
     let auditoriums = await Auditorium.find();
     if (auditoriums.length === 0) {
-      // Dummy data logic
+      
       const dummyAuditoriums = [
         { name: "Main Hall", location: "Block A, Ground Floor", capacity: 500, facilities: ["Projector", "AC", "Sound System"] },
         { name: "Seminar Hall 1", location: "Block B, First Floor", capacity: 150, facilities: ["Projector", "Whiteboard"] },
@@ -27,9 +26,6 @@ router.get("/", authenticate, async (req, res) => {
   }
 });
 
-// === ADD THIS NEW POST ROUTE ===
-// POST /
-// Creates a new auditorium (Admin Only)
 router.post(
   "/",
   authenticate,

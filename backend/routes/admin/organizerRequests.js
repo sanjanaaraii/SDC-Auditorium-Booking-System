@@ -1,12 +1,12 @@
 import express from "express";
 import OrganizerRequest from "../../models/OrganizerRequest.js";
-import User from "../../models/User.js";
+import User from "../../models/user.js";
 import { authenticate } from "../../middleware/authmiddleware.js";
 import { authorize } from "../../middleware/authorize.js";
 
 const router = express.Router();
 
-// GET ALL ORGANIZER REQUESTS (ADMIN)
+
 router.get(
   "/",
   authenticate,
@@ -26,7 +26,6 @@ router.get(
   }
 );
 
-// ✅ UPDATE ORGANIZER REQUEST STATUS
 router.patch(
   "/:id",
   authenticate,
@@ -46,7 +45,6 @@ router.patch(
       request.status = status;
       await request.save();
 
-      // 🔥 Promote user if approved
       if (status === "Approved") {
         request.user.role = "organizer";
         await request.user.save();

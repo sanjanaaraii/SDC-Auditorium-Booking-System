@@ -56,7 +56,6 @@ const bookingSchema = new mongoose.Schema(
       },
     },
 
-    // ✅ NEW FIELD (IMPORTANT)
     eventId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Booking",

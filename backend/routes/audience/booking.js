@@ -14,10 +14,10 @@ router.post(
   authorize("audience"),
   async (req, res) => {
     try {
-      // ✅ 1. EXTRACT FIRST (VERY IMPORTANT)
+      
       const { auditoriumId, seats, eventId } = req.body;
 
-      // ✅ 2. VALIDATION
+    
       if (!auditoriumId || !eventId || !Array.isArray(seats) || seats.length === 0) {
         return res.status(400).json({
           message: "Auditorium ID, event ID and seats are required"
@@ -28,20 +28,18 @@ router.post(
         return res.status(400).json({ message: "Invalid auditorium ID" });
       }
 
-      // ✅ 3. FETCH EVENT (this is actually a Booking of type EVENT)
+
       const eventBooking = await Booking.findById(eventId);
 
       if (!eventBooking) {
         return res.status(404).json({ message: "Event not found" });
       }
 
-      // ✅ 4. CHECK AUDITORIUM
       const auditorium = await Auditorium.findById(auditoriumId);
       if (!auditorium) {
         return res.status(404).json({ message: "Auditorium not found" });
       }
 
-      // ✅ 5. CHECK SAME EVENT DUPLICATE
       const alreadyBooked = await Booking.findOne({
         user: req.user._id,
         eventId: eventId,
@@ -55,16 +53,14 @@ router.post(
         });
       }
 
-      // ✅ 6. 🚨 CHECK TIME CONFLICT (DIFFERENT EVENTS)
+      //  🚨 CHECK TIME CONFLICT (DIFFERENT EVENTS)
       const conflictingBooking = await Booking.findOne({
         user: req.user._id,
         bookingType: "SEAT",
         status: { $ne: "Cancelled" },
 
-        // match same date
         date: eventBooking.date,
 
-        // overlap logic
         $or: [
           {
             startTime: { $lt: eventBooking.endTime },
@@ -79,7 +75,6 @@ router.post(
         });
       }
 
-      // ✅ 7. CHECK SEAT CONFLICT
       const existingBookings = await Booking.find({
         eventId: eventId,
         seats: { $in: seats },
@@ -92,7 +87,6 @@ router.post(
         });
       }
 
-      // ⚠️ IMPORTANT: copy event timing into seat booking
       const booking = new Booking({
         user: req.user._id,
         auditorium: auditoriumId,

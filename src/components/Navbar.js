@@ -2,6 +2,7 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../App.js";
+import ProfilePage from "../pages/ProfilePage.css";
 
 const Navbar = () => {
   const { auth, logout, setAuth } = useContext(AuthContext);
@@ -12,12 +13,11 @@ const Navbar = () => {
 
   const dropdownRef = useRef(null);
 
-  // ✅ FIX 1: sync phone when user changes
   useEffect(() => {
     setPhone(auth.user?.phone || "");
   }, [auth.user]);
 
-  // ✅ FIX 2: dependency added
+
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
